@@ -1,8 +1,9 @@
-import { Box, Button, ComponentWithAs, Container, Flex, Heading, Input, Stack, StackProps, useColorMode } from '@chakra-ui/react'
+import { Button, Container, Flex, Heading, Stack, useColorMode } from '@chakra-ui/react'
 import axios from 'axios'
 import { Field, Formik, FormikHelpers } from 'formik'
 import type { NextPage } from 'next'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
+import * as yup from "yup"
 import { TextFormField } from '../components/form-fields/TextFormField'
 import { CreateShortUrlRequest } from '../types/rest'
 
@@ -11,6 +12,13 @@ interface CreateShortUrlFormValues {
 }
 
 const initialValues: CreateShortUrlFormValues = { targetUrl: "" }
+
+const schema = yup.object({
+  targetUrl: yup.string()
+    .label("Target URL")
+    .required()
+    .url(({ label }) => `${label} must be a valid URL. Don't forget to include the protocol (https://)`),
+})
 
 const Home: NextPage = () => {
 
@@ -34,6 +42,7 @@ const Home: NextPage = () => {
       </Flex>
       <Container display='flex' flexDir='column' justifyContent='center' flexGrow={1}>
         <Formik
+          validationSchema={schema}
           initialValues={initialValues}
           onSubmit={(values, actions) => { handleSubmit(values, actions) }}>
           {formik => (
