@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next';
+import ShortUniqueId from "short-unique-id";
 import { CreateShortUrlRequest } from "../../../types/rest";
 
 const prisma = new PrismaClient()
+const uid = new ShortUniqueId({ length: 10 });
 
 const post = async (req: NextApiRequest, res: NextApiResponse) => {
     const { slug, targetUrl } = req.body as CreateShortUrlRequest;
@@ -11,10 +13,12 @@ const post = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
     }
 
+    const actualSlug = slug ? slug : uid();
+
     const response = await prisma.short_url.create({
         data: {
             target_url: targetUrl,
-            slug: slug ? slug : "slug" + targetUrl.replace(/[^a-zA-Z]/g, "") // TODO
+            slug: actualSlug,
         }
     });
 
