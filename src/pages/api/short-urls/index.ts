@@ -29,21 +29,17 @@ const handlers = [
 ]
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-        const { method } = req
+    const { method } = req
 
-        const handler = handlers.find(handler => handler.method === method)
+    const handler = handlers.find(handler => handler.method === method)
 
-        if (!handler) {
-            res.setHeader('Allow', handlers.map(handler => handler.method))
-            res.status(405).end(`Method ${method} Not Allowed`)
-            return;
-        }
-
-        await handler.handle(req, res);
-    } catch (e) {
-        res.status(500).end(e.toString());
+    if (!handler) {
+        res.setHeader('Allow', handlers.map(handler => handler.method))
+        res.status(405).end(`Method ${method} Not Allowed`)
+        return;
     }
+
+    await handler.handle(req, res);
 
 }
 
