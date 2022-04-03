@@ -1,6 +1,6 @@
 CREATE TABLE short_url (
     id serial PRIMARY KEY,
     slug VARCHAR(64) UNIQUE NOT NULL,
-    target_url VARCHAR(2048),
+    target_url VARCHAR(2048) NOT NULL,
     CREATED_AT TIMESTAMP NOT NULL DEFAULT NOW()
 )
