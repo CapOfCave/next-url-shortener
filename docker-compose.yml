@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  next:
+    build: ./
+    ports:
+      - '3000:3000'
+
+  db:
+    build: ./database
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yttqo2QEpSYJPDX49Ju4iN2yNiCfr71bL1YHtrpuH_Df87rJ
+      POSTGRES_DB: next_url_shortener
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  postgres_data:
+    driver: local
