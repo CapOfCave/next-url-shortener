@@ -1,5 +1,5 @@
 import { AddIcon, CheckIcon, ChevronLeftIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Heading, Link, useClipboard } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Heading, Link, useClipboard } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -20,24 +20,26 @@ const UrlCreatedPage: NextPage<UrlCreatedPageProps> = ({ slug }) => {
     }
 
     return (
-        <Flex direction="column" align="center">
-            <Box backgroundColor="teal.500" rounded="50%" width="6rem" height="6rem" display="flex" mb="6">
-                <CheckIcon w={10} h={10} margin="auto" color="white" />
-            </Box>
-            <Heading>
-                Link successfully created.
-            </Heading>
-            <Flex align="center" mt={4}>
-                <Link href={`/to/${slug}`} target="_blank" rel="noreferrer noopener" fontSize="xl" color='teal.500'>{targetUrl}</Link>
-                <Button onClick={onCopy} ml={3}>
-                    {hasCopied ? 'Copied' : 'Copy'}
+        <Container my="auto" display='flex' flexDir='column' justifyContent='center' flexGrow={1}>
+            <Flex direction="column" align="center">
+                <Box backgroundColor="teal.500" rounded="50%" width="6rem" height="6rem" display="flex" mb="6">
+                    <CheckIcon w={10} h={10} margin="auto" color="white" />
+                </Box>
+                <Heading>
+                    Link successfully created.
+                </Heading>
+                <Flex align="center" mt={4}>
+                    <Link href={`/to/${slug}`} target="_blank" rel="noreferrer noopener" fontSize="xl" color='teal.500'>{targetUrl}</Link>
+                    <Button onClick={onCopy} ml={3}>
+                        {hasCopied ? 'Copied' : 'Copy'}
+                    </Button>
+                </Flex>
+
+                <Button onClick={navigateBack} leftIcon={<AddIcon />} mt={10} size="md" variant='ghost'>
+                    Create another Short URL
                 </Button>
             </Flex>
-
-            <Button onClick={navigateBack}leftIcon={<AddIcon />} mt={10} size="md" variant='ghost'>
-                Create another Short URL
-            </Button>
-        </Flex>
+        </Container>
     )
 }
 

@@ -35,18 +35,22 @@ const CreateShortUrl: NextPage = () => {
   }
 
   return (
-    <Formik
-      validationSchema={schema}
-      initialValues={initialValues}
-      onSubmit={(values, actions) => { handleSubmit(values, actions) }}>
-      {formik => (
-        <Stack as="form" spacing={4} onSubmit={e => formik.handleSubmit(e as any as FormEvent<HTMLFormElement>)}>
-          <Heading>Create Short URL</Heading>
-          <Field placeholder="Target URL" name="targetUrl" component={TextFormField} />
-          <Button type="submit">Create</Button>
-        </Stack>
-      )}
-    </Formik>
+    <Container my="auto" display='flex' flexDir='column' justifyContent='center' flexGrow={1}>
+      <Formik
+        validationSchema={schema}
+        initialValues={initialValues}
+        onSubmit={(values, actions) => { handleSubmit(values, actions) }}>
+        {formik => (
+          <Stack as="form" spacing={4} onSubmit={e => formik.handleSubmit(e as any as FormEvent<HTMLFormElement>)}>
+            <Heading>Create Short URL</Heading>
+            <Field placeholder="Target URL" name="targetUrl" component={TextFormField} />
+            <Button type="submit">Create</Button>
+          </Stack>
+        )}
+      </Formik>
+    </Container>
+
+
   )
 }
 
