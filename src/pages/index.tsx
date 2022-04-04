@@ -2,10 +2,11 @@ import { Button, Container, Flex, Heading, Stack, useColorMode } from '@chakra-u
 import axios from 'axios'
 import { Field, Formik, FormikHelpers } from 'formik'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { FormEvent } from 'react'
 import * as yup from "yup"
 import { TextFormField } from '../components/form-fields/TextFormField'
-import { CreateShortUrlRequest } from '../types/rest'
+import { CreateShortUrlRequest, CreateShortUrlResponse } from '../types/rest'
 
 interface CreateShortUrlFormValues {
   targetUrl: string;
@@ -22,13 +23,15 @@ const schema = yup.object({
 
 const CreateShortUrl: NextPage = () => {
 
+  const router = useRouter();
+
   const handleSubmit = async ({ targetUrl }: CreateShortUrlFormValues, { setSubmitting }: FormikHelpers<CreateShortUrlFormValues>) => {
     const body: CreateShortUrlRequest = {
       targetUrl
     }
-    const response = await axios.post("/api/short-urls", body)
-    console.log(response.data)
+    const response = await axios.post<CreateShortUrlResponse>("/api/short-urls", body)
     setSubmitting(false);
+    router.push(`/created?slug=${response.data.slug}`);
   }
 
   return (

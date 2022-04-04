@@ -1,11 +1,14 @@
 import { CheckIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Heading, Link, useClipboard } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 
-const UrlCreatedPage: NextPage = () => {
+interface UrlCreatedPageProps {
+    slug: string;
+}
 
-    const slug = "8jTtasuBSn";
+const UrlCreatedPage: NextPage<UrlCreatedPageProps> = ({ slug }) => {
+
     const targetUrl = `localhost:3000/to/${slug}`
     const { hasCopied, onCopy } = useClipboard(targetUrl)
 
@@ -27,6 +30,26 @@ const UrlCreatedPage: NextPage = () => {
             </Flex>
         </Flex>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+    const { slug } = query
+
+    // the user is messing with us; redirect them to the home page
+    if (!slug || Array.isArray(slug)) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/"
+            }
+        }
+    }
+
+    return {
+        props: {
+            slug
+        }
+    }
 }
 
 export default UrlCreatedPage;
