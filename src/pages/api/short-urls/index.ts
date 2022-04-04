@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next';
 import ShortUniqueId from "short-unique-id";
 import { delegate, EndpointHandler } from "../../../lib/api-lib";
-import { CreateShortUrlRequest } from "../../../types/rest";
+import { CreateShortUrlRequest, CreateShortUrlResponse } from "../../../types/rest";
 
 const prisma = new PrismaClient()
 const uid = new ShortUniqueId({ length: 10 });
@@ -18,15 +18,18 @@ export const createShortUrl = async (targetUrl: string, slug?: string) => {
     });
 }
 
-const post = async (req: NextApiRequest, res: NextApiResponse) => {
+const post = async (req: NextApiRequest, res: NextApiResponse<CreateShortUrlResponse>) => {
     const { slug, targetUrl } = req.body as CreateShortUrlRequest;
     if (!targetUrl) {
         res.status(400).end('targetUrl must not be empty.');
         return;
     }
     const response = await createShortUrl(targetUrl, slug);
-    console.log("response", response)
-    res.status(201).json(response);
+
+    res.status(201).json({
+        targetUrl: response.target_url,
+        slug: response.slug,
+    });
 }
 
 const handlers: EndpointHandler[] = [
