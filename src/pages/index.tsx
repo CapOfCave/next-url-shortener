@@ -20,7 +20,7 @@ const schema = yup.object({
     .url(({ label }) => `${label} must be a valid URL. Don't forget to include the protocol (https://)`),
 })
 
-const Home: NextPage = () => {
+const CreateShortUrl: NextPage = () => {
 
   const handleSubmit = async ({ targetUrl }: CreateShortUrlFormValues, { setSubmitting }: FormikHelpers<CreateShortUrlFormValues>) => {
     const body: CreateShortUrlRequest = {
@@ -47,4 +47,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default CreateShortUrl
