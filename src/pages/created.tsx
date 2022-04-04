@@ -14,17 +14,15 @@ const UrlCreatedPage: NextPage<UrlCreatedPageProps> = ({ slug }) => {
 
     return (
         <Flex direction="column" align="center">
-            <Box backgroundColor="green.300" rounded="50%" width="6rem" height="6rem" display="flex" mb="1.5rem">
+            <Box backgroundColor="teal.500" rounded="50%" width="6rem" height="6rem" display="flex" mb="6">
                 <CheckIcon w={10} h={10} margin="auto" color="white" />
             </Box>
             <Heading>
                 Link successfully created.
             </Heading>
-            <Flex align="center" mt={3}>
-                <NextLink href={`/to/${slug}`}>
-                    <Link fontSize="lg">{targetUrl}</Link>
-                </NextLink>
-                <Button onClick={onCopy} ml={2}>
+            <Flex align="center" mt={4}>
+                <Link href={`/to/${slug}`} target="_blank" rel="noreferrer noopener" fontSize="xl" color='teal.500'>{targetUrl}</Link>
+                <Button onClick={onCopy} ml={3}>
                     {hasCopied ? 'Copied' : 'Copy'}
                 </Button>
             </Flex>
