@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![Nextjs CI](https://github.com/CapOfCave/next-url-shortener/actions/workflows/ci.yml/badge.svg)](https://github.com/CapOfCave/next-url-shortener/actions/workflows/ci.yml)
 
-## Getting Started
+A lightweight url shortener made with [Next.js](https://nextjs.org/), [Typescript](https://www.typescriptlang.org/), [Prisma](https://www.prisma.io/), [PostgreSQL](https://www.postgresql.org/) and [Chakra UI](https://chakra-ui.com/)
 
-First, run the development server:
+# Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
+## Run with Docker
+
+You need docker and docker-compose to run this project in this way. Just execute the following command in the top level directory:
+
+```sh
+docker-compose up -d --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start all necessary services as [a relative link](other_file.md):
+ - The PostgreSQL database (available on [localhost:5432](http://localhost:5432/))
+ - Adminer (available on [localhost:8080](http://localhost:8080/))
+ - The Next.js app (available on [localhost:3000](http://localhost:3000/))
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Run without Docker
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Assuming you have the PostgreSQL database up and running on the port specified in [the .env file](.env), you can start the Next.js app as follows:
 
-## Learn More
+```sh
+npm run build
+npm start
+```
+or alternatively, enabling live reload and other development features:
+```sh
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
