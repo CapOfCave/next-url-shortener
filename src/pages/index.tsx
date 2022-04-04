@@ -22,8 +22,6 @@ const schema = yup.object({
 
 const Home: NextPage = () => {
 
-  const { colorMode, toggleColorMode } = useColorMode()
-
   const handleSubmit = async ({ targetUrl }: CreateShortUrlFormValues, { setSubmitting }: FormikHelpers<CreateShortUrlFormValues>) => {
     const body: CreateShortUrlRequest = {
       targetUrl
@@ -34,27 +32,18 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Flex direction='column' height='100vh'>
-      <Flex justify='flex-end' padding='2'>
-        <Button onClick={toggleColorMode}>
-          Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-        </Button>
-      </Flex>
-      <Container display='flex' flexDir='column' justifyContent='center' flexGrow={1}>
-        <Formik
-          validationSchema={schema}
-          initialValues={initialValues}
-          onSubmit={(values, actions) => { handleSubmit(values, actions) }}>
-          {formik => (
-            <Stack as="form" spacing={4} onSubmit={e => formik.handleSubmit(e as any as FormEvent<HTMLFormElement>)}>
-              <Heading>Create Short URL</Heading>
-              <Field placeholder="Target URL" name="targetUrl" component={TextFormField} />
-              <Button type="submit">Create</Button>
-            </Stack>
-          )}
-        </Formik>
-      </Container>
-    </Flex >
+    <Formik
+      validationSchema={schema}
+      initialValues={initialValues}
+      onSubmit={(values, actions) => { handleSubmit(values, actions) }}>
+      {formik => (
+        <Stack as="form" spacing={4} onSubmit={e => formik.handleSubmit(e as any as FormEvent<HTMLFormElement>)}>
+          <Heading>Create Short URL</Heading>
+          <Field placeholder="Target URL" name="targetUrl" component={TextFormField} />
+          <Button type="submit">Create</Button>
+        </Stack>
+      )}
+    </Formik>
   )
 }
 
