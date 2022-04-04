@@ -1,7 +1,8 @@
-import { CheckIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Heading, Link, useClipboard } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 interface UrlCreatedPageProps {
     slug: string;
@@ -11,6 +12,12 @@ const UrlCreatedPage: NextPage<UrlCreatedPageProps> = ({ slug }) => {
 
     const targetUrl = `localhost:3000/to/${slug}`
     const { hasCopied, onCopy } = useClipboard(targetUrl)
+
+    const router = useRouter();
+
+    const navigateBack = () => {
+        router.push("/")
+    }
 
     return (
         <Flex direction="column" align="center">
@@ -26,6 +33,10 @@ const UrlCreatedPage: NextPage<UrlCreatedPageProps> = ({ slug }) => {
                     {hasCopied ? 'Copied' : 'Copy'}
                 </Button>
             </Flex>
+
+            <Button onClick={navigateBack}leftIcon={<AddIcon />} mt={10} size="md" variant='ghost'>
+                Create another Short URL
+            </Button>
         </Flex>
     )
 }
